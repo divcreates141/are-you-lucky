@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Lucky 🍀</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #fffaf5, #fdf2ff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: white;
+      width: 100%;
+      max-width: 520px;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 2rem;
+    }
+
+    p {
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 24px 0;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .num-btn {
+      background: #f5f0ff;
+    }
+
+    .choice-btn {
+      background: #fff0f6;
+      margin: 6px;
+    }
+
+    .share-btn {
+      background: #eef7ff;
+      margin: 8px 6px 0;
+    }
+
+    #complimentChoices,
+    #resultCard,
+    #shareSection {
+      display: none;
+    }
+
+    .result-box {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #fff7e8, #fff);
+      border: 1px solid #f3e4b8;
+    }
+
+    .compliment-card {
+      margin-top: 16px;
+      padding: 22px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ffe8f3, #f4ecff);
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .small {
+      font-size: 0.92rem;
+      color: #666;
+      margin-top: 12px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Get Lucky 🍀</h1>
+    <p>
+      Roll Up The Rim hasn’t exactly been generous…
+      so let’s see if <strong>you’re luckier</strong>.
+    </p>
+    <p>Pick a number. If it’s even, you win one premium compliment.</p>
+
+    <div class="number-grid">
+      <button class="num-btn" onclick="checkNumber(1)">1</button>
+      <button class="num-btn" onclick="checkNumber(2)">2</button>
+      <button class="num-btn" onclick="checkNumber(3)">3</button>
+      <button class="num-btn" onclick="checkNumber(4)">4</button>
+      <button class="num-btn" onclick="checkNumber(5)">5</button>
+      <button class="num-btn" onclick="checkNumber(6)">6</button>
+      <button class="num-btn" onclick="checkNumber(7)">7</button>
+      <button class="num-btn" onclick="checkNumber(8)">8</button>
+      <button class="num-btn" onclick="checkNumber(9)">9</button>
+      <button class="num-btn" onclick="checkNumber(10)">10</button>
+    </div>
+
+    <div id="statusMessage"></div>
+
+    <div id="complimentChoices">
+      <p><strong>Choose your premium compliment:</strong></p>
+      <button class="choice-btn" onclick="showCompliment('confidence')">Confidence</button>
+      <button class="choice-btn" onclick="showCompliment('energy')">Energy</button>
+      <button class="choice-btn" onclick="showCompliment('intelligence')">Brain</button>
+      <button class="choice-btn" onclick="showCompliment('mysterious')">Mysterious</button>
+    </div>
+
+    <div id="resultCard" class="result-box">
+      <div><strong>You got lucky ✨</strong></div>
+      <div class="small">You win one premium compliment.</div>
+      <div id="complimentText" class="compliment-card"></div>
+    </div>
+
+    <div id="shareSection">
+      <p class="small">Cute enough to screenshot. Dangerous.</p>
+      <button class="share-btn" onclick="copyGameLink()">Copy game link</button>
+      <button class="share-btn" onclick="shareResult()">Share result</button>
+    </div>
+  </div>
+
+  <script>
+    let currentCompliment = "";
+
+    const compliments = {
+      confidence: "You have the kind of confidence people wish they could borrow for a day.",
+      energy: "Your energy feels like the reason a room gets better when you walk in.",
+      intelligence: "Your brain is extremely attractive, which feels unfair to everyone else.",
+      mysterious: "You have the kind of vibe people want to figure out and secretly remember."
+    };
+
+    function checkNumber(num) {
+      document.getElementById("resultCard").style.display = "none";
+      document.getElementById("shareSection").style.display = "none";
+      document.getElementById("complimentText").innerText = "";
+
+      if (num % 2 === 0) {
+        document.getElementById("statusMessage").innerHTML =
+          "<p><strong>" + num + "</strong> is even. Lucky you 🍀</p>";
+        document.getElementById("complimentChoices").style.display = "block";
+      } else {
+        document.getElementById("statusMessage").innerHTML =
+          "<p><strong>" + num + "</strong> is not lucky today… but I respect the optimism.</p>";
+        document.getElementById("complimentChoices").style.display = "none";
+      }
+    }
+
+    function showCompliment(type) {
+      currentCompliment = compliments[type];
+      document.getElementById("complimentText").innerText = currentCompliment;
+      document.getElementById("resultCard").style.display = "block";
+      document.getElementById("shareSection").style.display = "block";
+    }
+
+    function copyGameLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Game link copied. Send it to your lucky friend 🍀");
+    }
+
+    function shareResult() {
+      const text = "I got lucky and won a premium compliment 🍀 Try it yourself: " + window.location.href;
+      if (navigator.share) {
+        navigator.share({
+          title: "Get Lucky 🍀",
+          text: text,
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(text);
+        alert("Share text copied. Paste it into Instagram story, DM, or text.");
+      }
+    }
+  </script>
+</body>
+</html>
